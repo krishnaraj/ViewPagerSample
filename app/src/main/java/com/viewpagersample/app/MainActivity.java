@@ -31,18 +31,20 @@ public class MainActivity extends ActionBarActivity {
                 final float normalizedposition = Math.abs(Math.abs(transformPos) - 1);
                 page.setAlpha(normalizedposition + 0.5f);
 
+                int max = -pageHeight / 10;
+
+                /* Check http://stackoverflow.com/questions/32384789/android-viewpager-smooth-transition-for-this-design
+                   for other ways to do this.
+                */
                 if (transformPos < -1) { // [-Infinity,-1)
                     // This page is way off-screen to the left.
                     page.setTranslationY(0);
                 } else if (transformPos <= 1) { // [-1,1]
-                    page.setTranslationY(-pageHeight / 10);
-
+                    page.setTranslationY(max * (1 - Math.abs(transformPos)));
                 } else { // (1,+Infinity]
                     // This page is way off-screen to the right.
                     page.setTranslationY(0);
                 }
-
-
             }
         });
 
